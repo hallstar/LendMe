@@ -19,6 +19,8 @@
     <!-- Favicon -->
     <link rel="shortcut icon" href="{{ asset('images/logo/favicon.png') }}">
 
+    @routes
+
     <script src="{{ mix('/js/app.js') }}" defer></script>
 
     {{-- Inertia --}}
