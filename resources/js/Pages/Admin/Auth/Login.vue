@@ -69,13 +69,12 @@
               </g>
             </g>
           </svg>
-          <h2 class="brand-text text-primary ml-1">Vuexy</h2>
+          <h2 class="brand-text text-primary ml-1">Lendme</h2>
         </a>
 
-        <h4 class="card-title mb-1">Welcome to Vuexy! 👋</h4>
-        <p class="card-text mb-2">Please sign-in to your account and start the adventure</p>
+        <h4 class="card-title mb-1">Admin Portal!</h4>
 
-        <form class="auth-login-form mt-2" action="/" method="GET">
+        <form class="auth-login-form mt-2" @submit.prevent="submit">
           <div class="form-group">
             <label for="login-email" class="form-label">Email</label>
             <input
@@ -83,11 +82,15 @@
               class="form-control"
               id="login-email"
               name="login-email"
+              :error="errors.email"
               placeholder="john@example.com"
               aria-describedby="login-email"
               tabindex="1"
+              v-model="form.email"
+              v-bind:class="[errors.email ? 'error' : '']"
               autofocus
             />
+            <span id="basic-default-name-error" class="error" v-if="errors.email">{{errors.email}}</span>
           </div>
 
           <div class="form-group">
@@ -97,7 +100,7 @@
                 <small>Forgot Password?</small>
               </a>
             </div>
-            <div class="input-group input-group-merge form-password-toggle">
+            <div class="input-group input-group-merge form-password-toggle" v-bind:class="[errors.password ? 'is-invalid' : '']">
               <input
                 type="password"
                 class="form-control form-control-merge"
@@ -106,46 +109,23 @@
                 tabindex="2"
                 placeholder="&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;"
                 aria-describedby="login-password"
+                v-model="form.password"
+                v-bind:class="[errors.password ? 'error' : '']"
               />
               <div class="input-group-append">
                 <span class="input-group-text cursor-pointer"><i data-feather="eye"></i></span>
               </div>
             </div>
+            <span id="basic-default-name-error" class="error" v-if="errors.password">{{errors.password}}</span>
           </div>
           <div class="form-group">
             <div class="custom-control custom-checkbox">
-              <input class="custom-control-input" type="checkbox" id="remember-me" tabindex="3" />
+              <input class="custom-control-input" type="checkbox" id="remember-me" tabindex="3" v-model="form.remember" />
               <label class="custom-control-label" for="remember-me"> Remember Me </label>
             </div>
           </div>
-          <button class="btn btn-primary btn-block" tabindex="4">Sign in</button>
+          <button :loading="sending" class="btn btn-primary btn-block" type="submit" tabindex="4">Sign in</button>
         </form>
-
-        <p class="text-center mt-2">
-          <span>New on our platform?</span>
-          <a href="#">
-            <span>Create an account</span>
-          </a>
-        </p>
-
-        <div class="divider my-2">
-          <div class="divider-text">or</div>
-        </div>
-
-        <div class="auth-footer-btn d-flex justify-content-center">
-          <a href="javascript:void(0)" class="btn btn-facebook">
-            <i data-feather="facebook"></i>
-          </a>
-          <a href="javascript:void(0)" class="btn btn-twitter white">
-            <i data-feather="twitter"></i>
-          </a>
-          <a href="javascript:void(0)" class="btn btn-google">
-            <i data-feather="mail"></i>
-          </a>
-          <a href="javascript:void(0)" class="btn btn-github">
-            <i data-feather="github"></i>
-          </a>
-        </div>
       </div>
     </div>
     <!-- /Login v1 -->
@@ -156,13 +136,33 @@
 <script>
 
 export default {
+  props: {
+    errors: Object,
+  },
   data() {
     return {
-      email: "",
-      password: "",
-      checkbox_remember_me: false,
+      sending: false,
+      form: {
+        email: '',
+        password: '',
+        remember: null,
+      },
     }
-  }
+  },
+  methods: {
+    submit() {
+      this.errors = {}
+      const data = {
+        email: this.form.email,
+        password: this.form.password,
+        remember: this.form.remember,
+      }
+      this.$inertia.post(route('login.attempt'), data, {
+        onStart: () => this.sending = true,
+        onFinish: () => this.sending = false,
+      })
+    },
+  },
 }
 
 </script>
