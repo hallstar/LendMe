@@ -1,12 +1,13 @@
 import Vue from 'vue'
 import VueMeta from 'vue-meta'
-import { InertiaApp } from '@inertiajs/inertia-vue'
+import { App, plugin } from '@inertiajs/inertia-vue'
 import { InertiaProgress } from '@inertiajs/progress/src'
 
 // Vuesax Component Framework
 import Vuesax from 'vuesax'
 import Layout from './Pages/Layout'
 
+Vue.use(plugin)
 Vue.use(Vuesax)
 
 
@@ -47,7 +48,7 @@ new Vue({
   metaInfo: {
     titleTemplate: (title) => title ? `${title} - LendMe` : 'LendMe'
   },
-  render: h => h(InertiaApp, {
+  render: h => h(App, {
     props: {
       initialPage: JSON.parse(app.dataset.page),
       // resolveComponent: name => import(`./Pages/${name}`).then(module => module.default),
