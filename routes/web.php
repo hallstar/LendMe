@@ -14,10 +14,13 @@ use Illuminate\Support\Facades\Route;
 */
 
 // Route::group(['namespace' => 'Auth'], function () {
+Route::domain('admin.lendme.test')->group(function () {
 
-    Route::get('login', [LoginController::class, 'showLoginForm'])
-        ->name('login')
-        ->middleware('guest');
+    Route::get('login', [LoginController::class, 'showLoginForm'])->name('login')->middleware('guest');
+    Route::post('login', [LoginController::class, 'login'])->name('login.attempt')->middleware('guest');
+    Route::post('logout', [LoginController::class, 'logout'])->name('logout');
+    
+});
 
 // });
 
