@@ -76,7 +76,7 @@ export default {
     isHeaderActive () {
       const path        = this.$route.fullPath
       let active        = false
-      const routeParent = this.$route.meta ? this.$route.meta.parent : undefined
+      const routeParent = undefined // this.$route.meta ? this.$route.meta.parent : undefined
 
       this.header.items.forEach((item) => {
 
@@ -108,7 +108,7 @@ export default {
 
       const path        = this.$route.fullPath
       let active        = false
-      const routeParent = this.$route.meta ? this.$route.meta.parent : undefined
+      const routeParent = undefined // this.$route.meta ? this.$route.meta.parent : undefined
 
       if (group.submenu) {
         group.submenu.forEach((item) => {

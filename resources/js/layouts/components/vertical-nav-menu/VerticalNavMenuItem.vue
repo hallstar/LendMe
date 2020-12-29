@@ -16,7 +16,7 @@
       {'disabled-item pointer-events-none' : isDisabled}
     ]" >
 
-      <router-link
+      <a
         tabindex="-1"
         v-if="to"
         exact
@@ -26,7 +26,7 @@
           <vs-icon v-if="!featherIcon" :icon-pack="iconPack" :icon="icon" />
           <feather-icon v-else :class="{'w-3 h-3': iconSmall}" :icon="icon" />
           <slot />
-      </router-link>
+      </a>
 
       <a v-else :target="target" :href="href" tabindex="-1">
         <vs-icon v-if="!featherIcon" :icon-pack="iconPack" :icon="icon" />
@@ -53,7 +53,7 @@ export default {
   },
   computed: {
     activeLink () {
-      return !!((this.to === this.$route.path || this.$route.meta.parent === this.slug) && this.to)
+      // return !!((this.to === this.$route.path || this.$route.meta.parent === this.slug) && this.to)
     }
   }
 }

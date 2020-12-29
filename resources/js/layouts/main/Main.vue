@@ -55,15 +55,14 @@
 
             <transition :name="routerTransition">
 
-              <div v-if="$route.meta.breadcrumb || $route.meta.pageTitle" class="router-header flex flex-wrap items-center mb-6">
+              <div class="router-header flex flex-wrap items-center mb-6">
                 <div
-                  class="content-area__heading"
-                  :class="{'pr-4 border-0 md:border-r border-solid border-grey-light' : $route.meta.breadcrumb}">
+                  class="content-area__heading pr-4 border-0 md:border-r border-solid border-grey-light">
                   <h2 class="mb-1">{{ routeTitle }}</h2>
                 </div>
 
                 <!-- BREADCRUMB -->
-                <vx-breadcrumb class="ml-4 md:block hidden" v-if="$route.meta.breadcrumb" :route="$route" :isRTL="$vs.rtl" />
+                <!-- <vx-breadcrumb class="ml-4 md:block hidden" :isRTL="$vs.rtl" /> -->
 
                 <!-- DROPDOWN -->
                 <vs-dropdown vs-trigger-click class="ml-auto md:block hidden cursor-pointer">
@@ -71,19 +70,19 @@
 
                   <vs-dropdown-menu class="w-32">
                     <vs-dropdown-item>
-                      <div @click="$router.push('/pages/profile').catch(() => {})" class="flex items-center">
+                      <div class="flex items-center">
                         <feather-icon icon="UserIcon" class="inline-block mr-2" svgClasses="w-4 h-4" />
                         <span>Profile</span>
                       </div>
                     </vs-dropdown-item>
                     <vs-dropdown-item>
-                      <div @click="$router.push('/apps/todo').catch(() => {})" class="flex items-center">
+                      <div class="flex items-center">
                         <feather-icon icon="CheckSquareIcon" class="inline-block mr-2" svgClasses="w-4 h-4" />
                         <span>Tasks</span>
                       </div>
                     </vs-dropdown-item>
                     <vs-dropdown-item>
-                      <div @click="$router.push('/apps/email').catch(() => {})" class="flex items-center">
+                      <div class="flex items-center">
                         <feather-icon icon="MailIcon" class="inline-block mr-2" svgClasses="w-4 h-4" />
                         <span>Inbox</span>
                       </div>
@@ -101,8 +100,8 @@
                 <vs-button icon-pack="feather" icon="icon-arrow-up" class="shadow-lg btn-back-to-top" />
               </back-to-top>
 
-              <transition :name="routerTransition" mode="out-in">
-                <router-view @changeRouteTitle="changeRouteTitle" @setAppClasses="(classesStr) => $emit('setAppClasses', classesStr)" />
+              <transition  mode="out-in">
+                <slot @changeRouteTitle="changeRouteTitle" @setAppClasses="(classesStr) => $emit('setAppClasses', classesStr)" />
               </transition>
             </div>
           </div>
@@ -116,18 +115,19 @@
 
 <script>
 import BackToTop           from 'vue-backtotop'
-import HNavMenu            from '@/layouts/components/horizontal-nav-menu/HorizontalNavMenu.vue'
-import navMenuItems        from '@/layouts/components/vertical-nav-menu/navMenuItems.js'
-import TheNavbarHorizontal from '@/layouts/components/navbar/TheNavbarHorizontal.vue'
-import TheNavbarVertical   from '@/layouts/components/navbar/TheNavbarVertical.vue'
-import TheFooter           from '@/layouts/components/TheFooter.vue'
+import HorizontalNavMenu   from '../components/horizontal-nav-menu/HorizontalNavMenu.vue'
+import navMenuItems        from '../components/vertical-nav-menu/navMenuItems.js'
+import TheNavbarHorizontal from '../components/navbar/TheNavbarHorizontal.vue'
+import TheNavbarVertical   from '../components/navbar/TheNavbarVertical.vue'
+import TheFooter           from '../components/TheFooter.vue'
 import themeConfig         from '@/../themeConfig.js'
-import VNavMenu            from '@/layouts/components/vertical-nav-menu/VerticalNavMenu.vue'
+import VNavMenu            from '../components/vertical-nav-menu/VerticalNavMenu.vue'
+import route               from '../../ziggy';
 
 export default {
   components: {
     BackToTop,
-    HNavMenu,
+    HorizontalNavMenu,
     TheFooter,
     TheNavbarHorizontal,
     TheNavbarVertical,
@@ -141,13 +141,13 @@ export default {
       navbarColor       : themeConfig.navbarColor || '#fff',
       navbarType        : themeConfig.navbarType  || 'floating',
       navMenuItems,
-      routerTransition  : themeConfig.routerTransition || 'none',
-      routeTitle        : this.$route.meta.pageTitle
+      routerTransition  : 'none', // themeConfig.routerTransition || 'none',
+      routeTitle        : '' // this.$route.meta.pageTitle
     }
   },
   watch: {
-    '$route' () {
-      this.routeTitle = this.$route.meta.pageTitle
+    'route' () {
+      this.routeTitle = '' // this.route.meta.pageTitle
     },
     isThemeDark (val) {
       const color = this.navbarColor === '#fff' && val ? '#10163a' : '#fff'
@@ -174,7 +174,7 @@ export default {
       }
     },
     isAppPage () {
-      return this.$route.meta.no_scroll
+    //   return this.$route.meta.no_scroll
     },
     isThemeDark ()     { return this.$store.state.theme === 'dark' },
     layoutTypeClass () { return `main-${this.mainLayoutType}`      },
@@ -191,9 +191,9 @@ export default {
     windowWidth ()          { return this.$store.state.windowWidth }
   },
   methods: {
-    changeRouteTitle (title) {
-      this.routeTitle = title
-    },
+    // changeRouteTitle (title) {
+    //   this.routeTitle = title
+    // },
     updateNavbarColor (val) {
       this.navbarColor = val
       if (val === '#fff') this.isNavbarDark = false

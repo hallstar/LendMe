@@ -114,7 +114,7 @@ export default {
       return (item) => {
         const path        = this.$route.fullPath
         let open          = false
-        const routeParent = this.$route.meta ? this.$route.meta.parent : undefined
+        const routeParent = undefined // this.$route.meta ? this.$route.meta.parent : undefined
 
         const func = (item) => {
           if (item.submenu) {

@@ -30,10 +30,10 @@
         <div class="header-sidebar flex items-end justify-between" slot="header">
 
           <!-- Logo -->
-          <router-link tag="div" class="vx-logo cursor-pointer flex items-center" to="/">
+          <a tag="div" class="vx-logo cursor-pointer flex items-center" to="/">
             <logo class="w-10 mr-4 fill-current text-primary" />
             <span class="vx-logo-text text-primary" v-show="isMouseEnter || !reduce" v-if="title">{{ title }}</span>
-          </router-link>
+          </a>
           <!-- /Logo -->
 
           <!-- Menu Buttons -->
@@ -152,7 +152,7 @@ export default {
     isGroupActive () {
       return (item) => {
         const path        = this.$route.fullPath
-        const routeParent = this.$route.meta ? this.$route.meta.parent : undefined
+        const routeParent = undefined // this.$route.meta ? this.$route.meta.parent : undefined
         let open          = false
 
         const func = (item) => {

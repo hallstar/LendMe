@@ -48,6 +48,11 @@
             <feather-icon icon="LogOutIcon" svgClasses="w-4 h-4" />
             <span class="ml-2">Logout</span>
           </li>
+
+          <!-- <li class="flex py-2 px-4 cursor-pointer hover:bg-primary hover:text-white">
+            <feather-icon icon="LogOutIcon" svgClasses="w-4 h-4" />
+            <inertia-link class="block px-6 py-2 hover:bg-indigo-500 hover:text-white" :href="route('admin.logout')" method="post" type="button">Logout</inertia-link>
+          </li> -->
         </ul>
       </vs-dropdown-menu>
     </vs-dropdown>
@@ -55,6 +60,9 @@
 </template>
 
 <script>
+
+import axios from 'axios'
+
 export default {
   computed: {
     activeUserInfo () {
@@ -62,11 +70,10 @@ export default {
     }
   },
   methods: {
-    logout () {
+    async logout () {
       localStorage.removeItem('userInfo')
-
-      // This is just for demo Purpose. If user clicks on logout -> redirect
-      this.$router.push('/pages/login').catch(() => {})
+      await axios.post('/logout', {})
+      window.location.href = '/login'
     }
   }
 }

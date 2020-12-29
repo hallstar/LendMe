@@ -68,7 +68,7 @@
 
 <script>
 import draggable     from 'vuedraggable'
-import VxAutoSuggest from '@/components/vx-auto-suggest/VxAutoSuggest.vue'
+import VxAutoSuggest from '../../../../components/vx-auto-suggest/VxAutoSuggest'
 
 export default {
   props: {

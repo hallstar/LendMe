@@ -58,6 +58,7 @@ export default {
     }
   },
   mounted () {
+    console.log("test")
     this.toggleClassInBody(themeConfig.theme)
     this.$store.commit('UPDATE_WINDOW_WIDTH', window.innerWidth)
 
