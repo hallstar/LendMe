@@ -1,5 +1,5 @@
 <?php
-use App\Http\Controllers\Auth\LoginController;
+// use App\Http\Controllers\Auth\LoginController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -13,12 +13,24 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-// Route::group(['namespace' => 'Auth'], function () {
+// Route::get('home', 'Admin\HomeController@index')->name('home');
+// Route::get('company', 'Company\Auth\LoginController@showLoginForm')->name('comp');
+
 Route::domain('admin.lendme.test')->group(function () {
 
-    Route::get('login', [LoginController::class, 'showLoginForm'])->name('login')->middleware('guest');
-    Route::post('login', [LoginController::class, 'login'])->name('login.attempt')->middleware('guest');
-    Route::post('logout', [LoginController::class, 'logout'])->name('logout');
+    Route::group(['as' => 'admin.', 'namespace' => 'Admin'], function () {
+
+        Route::group(['namespace' => 'Auth', 'middleware' => 'guest'], function () {
+
+            Route::get('login', 'LoginController@showLoginForm')->name('login');
+            Route::post('login', 'LoginController@login')->name('login.attempt');
+            Route::post('logout', 'LoginController@logout')->name('logout');
+
+        });
+        
+        Route::get('home', 'HomeController@index')->name('home')->middleware('auth:admins');
+
+    });
     
 });
 
