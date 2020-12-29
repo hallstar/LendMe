@@ -46,6 +46,12 @@ return [
             'provider' => 'users',
             'hash' => false,
         ],
+
+        'admins' => [
+            'redirectTo' => 'admin.home',
+            'driver' => 'session',
+            'provider' => 'admins',
+        ],
     ],
 
     /*
@@ -68,7 +74,17 @@ return [
     'providers' => [
         'users' => [
             'driver' => 'eloquent',
-            'model' => App\User::class,
+            'model' => App\Models\User::class,
+        ],
+
+        'admins' => [
+            'driver' => 'eloquent',
+            'model' => App\Models\AdminUser::class,
+        ],
+
+        'companies' => [
+            'driver' => 'eloquent',
+            'model' => App\Models\CompanyUser::class,
         ],
 
         // 'users' => [
