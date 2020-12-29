@@ -3,6 +3,8 @@ import VueMeta from 'vue-meta'
 import { App, plugin } from '@inertiajs/inertia-vue'
 import { InertiaProgress } from '@inertiajs/progress/src'
 
+Vue.mixin({ methods: { route: window.route } })
+
 // Vuesax Component Framework
 import Vuesax from 'vuesax'
 import Layout from './Pages/Layout'
@@ -36,7 +38,7 @@ import 'prismjs/themes/prism-tomorrow.css'
 import store from './store/store'
 
 Vue.config.productionTip = false
-// Vue.use(InertiaApp)
+
 Vue.use(VueMeta)
 
 InertiaProgress.init()
@@ -51,12 +53,12 @@ new Vue({
   render: h => h(App, {
     props: {
       initialPage: JSON.parse(app.dataset.page),
-      // resolveComponent: name => import(`./Pages/${name}`).then(module => module.default),
-      resolveComponent: name => import(`./Pages/${name}`)
-        .then(({ default: page }) => {
-          page.layout = page.layout === undefined ? Layout : page.layout
-          return page
-        }),
+      resolveComponent: name => import(`./Pages/${name}`).then(module => module.default),
+      // resolveComponent: name => import(`./Pages/${name}`)
+      //   .then(({ default: page }) => {
+      //     page.layout = page.layout === undefined ? Layout : page.layout
+      //     return page
+      //   }),
     },
   }),
 }).$mount(app)
