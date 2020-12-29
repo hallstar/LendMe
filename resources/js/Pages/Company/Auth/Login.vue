@@ -50,7 +50,7 @@
 
                   <div class="flex flex-wrap justify-between my-5">
                       <vs-checkbox v-model="checkbox_remember_me" class="mb-3">Remember Me</vs-checkbox>
-                      <router-link to="">Forgot Password?</router-link>
+                      <a to="">Forgot Password?</a>
                   </div>
                   <vs-button  type="border">Register</vs-button>
                   <vs-button class="float-right">Login</vs-button>
@@ -92,7 +92,11 @@
 
 <script>
 
+import Layout from '../../Layout'
+import FullPage from '../../../layouts/full-page/FullPage'
+
 export default {
+  layout: [Layout, FullPage],
   data() {
     return {
       email: "",

@@ -107,7 +107,6 @@
                 id="login-password"
                 name="login-password"
                 tabindex="2"
-                placeholder="&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;"
                 aria-describedby="login-password"
                 v-model="form.password"
                 v-bind:class="[errors.password ? 'error' : '']"
@@ -157,9 +156,12 @@ export default {
         password: this.form.password,
         remember: this.form.remember,
       }
-      this.$inertia.post(route('login.attempt'), data, {
+      this.$inertia.post(route('admin.login.attempt'), data, {
         onStart: () => this.sending = true,
-        onFinish: () => this.sending = false,
+        onFinish: () => { 
+          this.sending = false
+          this.form.password = ''
+        },  
       })
     },
   },
