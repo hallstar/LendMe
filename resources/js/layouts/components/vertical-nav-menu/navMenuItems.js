@@ -11,14 +11,20 @@
 export default [
   {
     url: "/",
-    name: "Home",
+    name: "Dashboard",
     slug: "home",
     icon: "HomeIcon",
   },
   {
     url: "/page2",
-    name: "Page 2",
+    name: "Companies",
     slug: "page2",
-    icon: "FileIcon",
+    icon: "BriefcaseIcon",
+  },
+  {
+    url: "/page2",
+    name: "Settings",
+    slug: "page2",
+    icon: "SettingsIcon",
   }
 ]
