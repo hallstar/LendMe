@@ -22,9 +22,19 @@ Route::domain('admin.lendme.test')->group(function () {
 
         Route::group(['namespace' => 'Auth', 'middleware' => 'guest'], function () {
 
+            Route::get('', function() {
+                return redirect()->route('admin.login');
+            })->name('landing.page');
+
             Route::get('login', 'LoginController@showLoginForm')->name('login');
             Route::post('login', 'LoginController@login')->name('login.attempt');
             Route::post('logout', 'LoginController@logout')->name('logout');
+
+            Route::get('forgot-password', 'ForgotPasswordController@showForm')->name('password.request');
+            Route::post('forgot-password', 'ForgotPasswordController@forgot')->name('password.email');
+
+            Route::get('reset-password/{token}', 'ResetPasswordController@showForm')->name('password.reset');
+            Route::post('reset-password', 'ResetPasswordController@reset')->name('password.update');
 
         });
         
