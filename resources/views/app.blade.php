@@ -17,7 +17,7 @@
     <link rel="stylesheet" href="{{ asset('css/core.css') }}">
 
     <!-- Favicon -->
-    <link rel="shortcut icon" href="{{ asset('images/logo/favicon.png') }}">
+    <link rel="shortcut icon" href="{{ asset('images/logo/logo.ico') }}">
 
     @routes
 
