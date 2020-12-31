@@ -7,6 +7,7 @@
     Author URL: http://www.themeforest.net/user/pixinvent
 ========================================================================================== -->
 
+
 <template>
   <div class="auth-wrapper auth-v1 px-2">
   <div class="auth-inner py-2">
@@ -43,41 +44,13 @@
               aria-describedby="login-email"
               tabindex="1"
               v-model="form.email"
-              v-bind:class="[errors.email ? 'is-invalid' : '']"
+              v-bind:class="[errors.email ? 'error' : '']"
               autofocus
             />
             <span id="basic-default-name-error" class="error" v-if="errors.email">{{errors.email}}</span>
           </div>
 
-          <div class="form-group">
-            <div class="d-flex justify-content-between">
-              <label for="login-password">Password</label>
-              <inertia-link :href="route('admin.password.request')"><small>Forgot Password?</small></inertia-link>
-            </div>
-            <div class="input-group input-group-merge form-password-toggle" v-bind:class="[errors.password ? 'is-invalid' : '']">
-              <input
-                type="password"
-                class="form-control form-control-merge"
-                id="login-password"
-                name="login-password"
-                tabindex="2"
-                aria-describedby="login-password"
-                v-model="form.password"
-                v-bind:class="[errors.password ? 'error' : '']"
-              />
-              <div class="input-group-append">
-                <span class="input-group-text cursor-pointer"><i data-feather="eye"></i></span>
-              </div>
-            </div>
-            <span id="basic-default-name-error" class="error" v-if="errors.password">{{errors.password}}</span>
-          </div>
-          <div class="form-group">
-            <div class="custom-control custom-checkbox">
-              <input class="custom-control-input" type="checkbox" id="remember-me" tabindex="3" v-model="form.remember" />
-              <label class="custom-control-label" for="remember-me"> Remember Me </label>
-            </div>
-          </div>
-          <button :loading="sending" class="btn btn-primary btn-block" type="submit" tabindex="4">Sign in</button>
+          <button :loading="sending" class="btn btn-primary btn-block" type="submit" tabindex="4">Send The Instructions</button>
         </form>
       </div>
     </div>
@@ -87,10 +60,8 @@
 </template>
 
 <script>
-import FullPage from '../../../layouts/full-page/FullPage'
 
 export default {
-  layout: [FullPage],
   props: {
     errors: Object,
     flash: Object,
@@ -100,24 +71,21 @@ export default {
       sending: false,
       form: {
         email: '',
-        password: '',
-        remember: null,
       },
     }
   },
   methods: {
     submit() {
       this.errors = {}
+      this.flash = {}
+
       const data = {
         email: this.form.email,
-        password: this.form.password,
-        remember: this.form.remember,
       }
-      this.$inertia.post(route('admin.login.attempt'), data, {
+      this.$inertia.post(route('admin.password.email'), data, {
         onStart: () => this.sending = true,
         onFinish: () => { 
           this.sending = false
-          this.form.password = ''
         },  
       })
     },
