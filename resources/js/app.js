@@ -48,7 +48,7 @@ let app = document.getElementById('app')
 new Vue({
   store,
   metaInfo: {
-    titleTemplate: (title) => title ? `${title} - ${$page.props.appName}` : `${$page.props.appName}`
+    titleTemplate: (title) => title ? `${title} - LendMe` : `LendMe`
   },
   render: h => h(App, {
     props: {
