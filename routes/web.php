@@ -1,5 +1,5 @@
 <?php
-// use App\Http\Controllers\Auth\LoginController;
+
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -44,6 +44,16 @@ Route::domain('admin.lendme.test')->group(function () {
     
 });
 
-// });
+Route::domain('portal.lendme.test')->group(function () {
 
-// Route::get('/{any}', 'ApplicationController')->where('any', '.*');
+    Route::group(['as' => 'portal.', 'namespace' => 'Company'], function () {
+
+        Route::group(['namespace' => 'Auth', 'middleware' => 'guest'], function () {
+
+            Route::get('login', 'LoginController@showLoginForm')->name('login');
+            
+        });
+
+    });
+    
+});
